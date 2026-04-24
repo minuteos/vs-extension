@@ -5,14 +5,25 @@ Tooling that makes working with [minuteOS](https://github.com/minuteos) projects
 ## Features
 
 - **Build / Clean** commands that drive the project's `make`-based build.
+- **Flash** and **Build & Flash** commands that reuse your existing
+  [minuteDebug](https://github.com/minuteos/vs-debugger) launch configuration
+  to download firmware to the target without opening a full debug session.
 - **Target picker** with a status-bar chip — click to switch the active build target.
 - Structured output channel for make and extension logs.
 
 Planned:
 
 - Project scaffolding and template support.
-- Flash / deploy integration with `minuteDebug`.
 - Richer project introspection (boards, components, libraries).
+
+### Flashing
+
+`minuteOS: Flash` picks up a `minute-debug` launch configuration from your
+workspace's `.vscode/launch.json` and calls the programmatic `flash` API
+exposed by [minuteDebug](https://github.com/minuteos/vs-debugger). No debug
+session is allocated — the probe is brought up, the program downloaded, and
+the probe torn down. `minuteOS: Build & Flash` runs `make all` first, so you
+can bind the whole pipeline to a single keybinding.
 
 ## Configuration
 

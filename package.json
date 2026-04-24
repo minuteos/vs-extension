@@ -18,6 +18,9 @@
     "Other",
     "Programming Languages"
   ],
+  "extensionDependencies": [
+    "minuteos.minute-debug"
+  ],
   "activationEvents": [
     "workspaceContains:**/Makefile",
     "workspaceContains:**/minuteos.json"
@@ -72,6 +75,16 @@
       {
         "command": "minute.clean",
         "title": "minuteOS: Clean",
+        "category": "minuteOS"
+      },
+      {
+        "command": "minute.flash",
+        "title": "minuteOS: Flash",
+        "category": "minuteOS"
+      },
+      {
+        "command": "minute.buildAndFlash",
+        "title": "minuteOS: Build & Flash",
         "category": "minuteOS"
       },
       {
