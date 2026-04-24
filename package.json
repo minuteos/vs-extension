@@ -1,0 +1,131 @@
+{
+  "$schema": "vscode://schemas/vscode-extensions",
+  "name": "minute",
+  "publisher": "minuteos",
+  "displayName": "minuteOS",
+  "description": "Tooling for minuteOS embedded projects",
+  "version": "0.0.1",
+  "repository": {
+    "url": "https://github.com/minuteos/vs-extension"
+  },
+  "author": "triaxis",
+  "license": "MIT",
+  "main": "./dist/extension.js",
+  "engines": {
+    "vscode": "^1.96.0"
+  },
+  "categories": [
+    "Other",
+    "Programming Languages"
+  ],
+  "activationEvents": [
+    "workspaceContains:**/Makefile",
+    "workspaceContains:**/minuteos.json"
+  ],
+  "keywords": [
+    "minuteos",
+    "mcu",
+    "microcontroller",
+    "embedded",
+    "make"
+  ],
+  "contributes": {
+    "configuration": {
+      "title": "minuteOS",
+      "properties": {
+        "minute.trace": {
+          "type": "array",
+          "description": "Enable trace output for various components",
+          "items": {
+            "type": "string"
+          }
+        },
+        "minute.make.path": {
+          "type": "string",
+          "default": "make",
+          "description": "Path to the make executable used for minuteOS builds"
+        },
+        "minute.make.jobs": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "default": null,
+          "description": "Number of parallel jobs passed to make (-j). null uses the default for your CPU."
+        },
+        "minute.target": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null,
+          "description": "Currently selected minuteOS build target (make target name)"
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "minute.build",
+        "title": "minuteOS: Build",
+        "category": "minuteOS"
+      },
+      {
+        "command": "minute.clean",
+        "title": "minuteOS: Clean",
+        "category": "minuteOS"
+      },
+      {
+        "command": "minute.selectTarget",
+        "title": "minuteOS: Select Target",
+        "category": "minuteOS"
+      }
+    ],
+    "taskDefinitions": [
+      {
+        "type": "minute",
+        "required": [
+          "task"
+        ],
+        "properties": {
+          "task": {
+            "type": "string",
+            "description": "The make target to build (e.g. all, clean, flash)"
+          },
+          "target": {
+            "type": "string",
+            "description": "Override the currently selected build target"
+          }
+        }
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "npm run check-types && npm run lint && node esbuild.mjs",
+    "watch": "npm-run-all -p watch:*",
+    "watch:esbuild": "node esbuild.mjs --watch",
+    "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "package": "npm run check-types && npm run lint && node esbuild.mjs --production --packages",
+    "check-types": "tsc --noEmit",
+    "prepare": "husky",
+    "lint": "eslint src"
+  },
+  "lint-staged": {
+    "*.{js,mjs,ts}": "eslint"
+  },
+  "devDependencies": {
+    "@stylistic/eslint-plugin": "^2.13.0",
+    "@types/node": "20.x",
+    "@types/vscode": "^1.96.0",
+    "disposablestack": "^1.1.7",
+    "esbuild": "^0.24.2",
+    "eslint-plugin-jsdoc": "^50.6.2",
+    "eslint-plugin-perfectionist": "^4.7.0",
+    "globals": "^15.14.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.4.1",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.21.0"
+  }
+}

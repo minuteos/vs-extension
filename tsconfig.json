@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "module": "Node16",
+    "target": "ES2022",
+    "lib": [
+      "DOM",
+      "ES2022",
+      "ESNext.Disposable"
+    ],
+    "sourceMap": true,
+    "rootDir": "src",
+    "strict": true,
+    "paths": {
+      "@my/*": [
+        "./src/*"
+      ]
+    }
+  }
+}
