@@ -118,7 +118,8 @@
     "watch": "npm-run-all -p watch:*",
     "watch:esbuild": "node esbuild.mjs --watch",
     "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
-    "package": "npm run check-types && npm run lint && node esbuild.mjs --production --packages",
+    "package": "npm run check-types && npm run lint && node esbuild.mjs --production",
+    "package:vsix": "vsce package --no-dependencies",
     "check-types": "tsc --noEmit",
     "prepare": "husky",
     "lint": "eslint src"
@@ -130,6 +131,7 @@
     "@stylistic/eslint-plugin": "^2.13.0",
     "@types/node": "20.x",
     "@types/vscode": "^1.96.0",
+    "@vscode/vsce": "^3.2.1",
     "disposablestack": "^1.1.7",
     "esbuild": "^0.24.2",
     "eslint-plugin-jsdoc": "^50.6.2",

@@ -1,0 +1,11 @@
+.github/
+.husky/
+.vscode/
+src/
+**/*.map
+.gitignore
+.vscodeignore
+esbuild.mjs
+eslint.config.mjs
+tsconfig.json
+CLAUDE.md
