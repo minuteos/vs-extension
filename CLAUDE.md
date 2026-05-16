@@ -5,8 +5,8 @@ Guidance for working in this repo.
 ## What this is
 
 `minuteos/vs-extension` is the VS Code companion extension for minuteOS
-projects. It drives the make-based build, exposes a target picker, and
-flashes firmware by calling into the sibling `minuteos/vs-debugger`
+projects. It drives the make-based build, exposes a Release/Debug
+configuration picker, and flashes firmware by calling into the sibling `minuteos/vs-debugger`
 extension's programmatic API. It does **not** implement probe
 communication — that lives in `vs-debugger`.
 

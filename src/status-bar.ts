@@ -1,14 +1,14 @@
 import { settings } from '@my/settings'
 import * as vscode from 'vscode'
 
-let targetItem: vscode.StatusBarItem | undefined
+let configItem: vscode.StatusBarItem | undefined
 let flashItem: vscode.StatusBarItem | undefined
 
 export function configureStatusBar(context: vscode.ExtensionContext): void {
-  targetItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 50)
-  targetItem.command = 'minute.selectTarget'
-  targetItem.tooltip = 'minuteOS build target — click to change'
-  context.subscriptions.push(targetItem)
+  configItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 50)
+  configItem.command = 'minute.selectConfig'
+  configItem.tooltip = 'minuteOS build configuration — click to change'
+  context.subscriptions.push(configItem)
 
   flashItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 49)
   flashItem.command = 'minute.buildAndFlash'
@@ -18,7 +18,7 @@ export function configureStatusBar(context: vscode.ExtensionContext): void {
 
   context.subscriptions.push(
     vscode.workspace.onDidChangeConfiguration((e) => {
-      if (e.affectsConfiguration('minute.target')) {
+      if (e.affectsConfiguration('minute.config')) {
         updateStatusBar()
       }
     }),
@@ -27,10 +27,9 @@ export function configureStatusBar(context: vscode.ExtensionContext): void {
 }
 
 export function updateStatusBar(): void {
-  if (targetItem) {
-    const target = settings.target ?? '(no target)'
-    targetItem.text = `$(chip) minuteOS: ${target}`
-    targetItem.show()
+  if (configItem) {
+    configItem.text = `$(chip) minuteOS: ${settings.config}`
+    configItem.show()
   }
   flashItem?.show()
 }

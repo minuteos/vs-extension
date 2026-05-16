@@ -9,7 +9,6 @@ const trace = getTrace('Make')
 
 interface RunOptions {
   task: string
-  target?: string | null
   cwd: string
 }
 
@@ -33,17 +32,14 @@ export function runMake(options: RunOptions): Promise<void> {
   return task
 }
 
-async function invoke({ task, target, cwd }: RunOptions): Promise<void> {
-  const effectiveTarget = target ?? settings.target
+async function invoke({ task, cwd }: RunOptions): Promise<void> {
   const args: string[] = []
   if (settings.make.jobs != null) {
     args.push(`-j${String(settings.make.jobs)}`)
   } else {
     args.push('-j')
   }
-  if (effectiveTarget) {
-    args.push(`TARGET=${effectiveTarget}`)
-  }
+  args.push(`CONFIG=${settings.config}`)
   args.push(task)
 
   const out = channel()

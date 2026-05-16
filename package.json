@@ -56,13 +56,14 @@
           "default": null,
           "description": "Number of parallel jobs passed to make (-j). null uses the default for your CPU."
         },
-        "minute.target": {
-          "type": [
-            "string",
-            "null"
+        "minute.config": {
+          "type": "string",
+          "enum": [
+            "Release",
+            "Debug"
           ],
-          "default": null,
-          "description": "Currently selected minuteOS build target (make target name)"
+          "default": "Release",
+          "description": "minuteOS build configuration (passed as CONFIG= to make)"
         }
       }
     },
@@ -88,8 +89,8 @@
         "category": "minuteOS"
       },
       {
-        "command": "minute.selectTarget",
-        "title": "minuteOS: Select Target",
+        "command": "minute.selectConfig",
+        "title": "minuteOS: Select Configuration",
         "category": "minuteOS"
       }
     ],
@@ -102,11 +103,11 @@
         "properties": {
           "task": {
             "type": "string",
-            "description": "The make target to build (e.g. all, clean, flash)"
+            "description": "The make target to build (e.g. all, clean)"
           },
-          "target": {
+          "config": {
             "type": "string",
-            "description": "Override the currently selected build target"
+            "description": "Override the build configuration (Release or Debug)"
           }
         }
       }

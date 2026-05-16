@@ -6,5 +6,5 @@ export interface MakeConfiguration {
 export interface Settings {
   trace: string[]
   make: MakeConfiguration
-  target: string | null
+  config: string
 }

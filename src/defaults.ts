@@ -6,5 +6,5 @@ export const defaults: Settings = {
     path: 'make',
     jobs: null,
   },
-  target: null,
+  config: 'Release',
 }

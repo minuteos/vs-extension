@@ -8,7 +8,8 @@ Tooling that makes working with [minuteOS](https://github.com/minuteos) projects
 - **Flash** and **Build & Flash** commands that reuse your existing
   [minuteDebug](https://github.com/minuteos/vs-debugger) launch configuration
   to download firmware to the target without opening a full debug session.
-- **Target picker** with a status-bar chip — click to switch the active build target.
+- **Configuration picker** with a status-bar chip — click to switch between
+  `Release` and `Debug` (passed as `CONFIG=` to make).
 - Structured output channel for make and extension logs.
 
 Planned:
@@ -31,7 +32,7 @@ can bind the whole pipeline to a single keybinding.
 | --- | --- |
 | `minute.make.path` | Path to the `make` executable. |
 | `minute.make.jobs` | Parallel job count passed to `make -j`. |
-| `minute.target` | Currently selected build target. |
+| `minute.config` | Build configuration (`Release` or `Debug`), passed as `CONFIG=`. |
 | `minute.trace` | Trace categories to log (`*` for all). |
 
 ## Development

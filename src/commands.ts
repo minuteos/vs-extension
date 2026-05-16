@@ -1,7 +1,6 @@
 import { flashFirmware } from '@my/flash'
-import { pickTarget, runMake } from '@my/make'
+import { runMake } from '@my/make'
 import { getLog } from '@my/services'
-import { settings } from '@my/settings'
 import * as vscode from 'vscode'
 
 const log = getLog('Commands')
@@ -12,7 +11,7 @@ export function registerCommands(context: vscode.ExtensionContext): void {
     vscode.commands.registerCommand('minute.clean', clean),
     vscode.commands.registerCommand('minute.flash', flash),
     vscode.commands.registerCommand('minute.buildAndFlash', buildAndFlash),
-    vscode.commands.registerCommand('minute.selectTarget', selectTarget),
+    vscode.commands.registerCommand('minute.selectConfig', selectConfig),
   )
 }
 
@@ -61,13 +60,13 @@ async function buildAndFlash(): Promise<void> {
   }
 }
 
-async function selectTarget(): Promise<void> {
-  const folder = requireWorkspace()
-  if (!folder) return
-  const target = await pickTarget(folder.uri.fsPath, settings.make.path)
-  if (target === undefined) return
+async function selectConfig(): Promise<void> {
+  const config = await vscode.window.showQuickPick(['Release', 'Debug'], {
+    title: 'Select minuteOS Build Configuration',
+  })
+  if (config === undefined) return
   await vscode.workspace.getConfiguration('minute').update(
-    'target', target, vscode.ConfigurationTarget.Workspace,
+    'config', config, vscode.ConfigurationTarget.Workspace,
   )
 }
 
