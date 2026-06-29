@@ -6,7 +6,8 @@ Guidance for working in this repo.
 
 `minuteos/vs-extension` is the VS Code companion extension for minuteOS
 projects. It drives the make-based build, exposes a Release/Debug
-configuration picker, and flashes firmware by calling into the sibling `minuteos/vs-debugger`
+configuration picker, feeds C/C++ IntelliSense from the build, and flashes
+firmware by calling into the sibling `minuteos/vs-debugger`
 extension's programmatic API. It does **not** implement probe
 communication — that lives in `vs-debugger`.
 
@@ -42,9 +43,21 @@ communication — that lives in `vs-debugger`.
   merges `vscode.workspace.getConfiguration('minute')` over `defaults` via
   `mergeDefaults` and freezes the result. Read the live values via the
   `settings` export; don't call `getConfiguration('minute')` directly.
-- External processes (currently only `make`) stream output into a
+- External processes (currently only `make`) stream build output into a
   dedicated `vscode.OutputChannel`, not the extension log channel. Follow
-  the pattern in `src/make/runner.ts`.
+  the pattern in `src/make/runner.ts`. Silent introspection of the build
+  (e.g. `queryMake`) captures stdout instead and must not touch that
+  channel.
+- C/C++ IntelliSense lives in `src/intellisense/`. It registers a cpptools
+  `CustomConfigurationProvider` (via the `vscode-cpptools` helper) fed by
+  include paths/defines/standard/compiler parsed from a `make --dry-run`
+  (`-Bnw all`) — the flags are read off the real compiler command lines, so
+  no project-side cooperation is needed. `parse.ts` is the pure parser (no
+  vscode deps, unit-testable); `query.ts` runs make; `provider.ts` is the
+  cpptools glue. `ms-vscode.cpptools` is a **soft** dependency —
+  `getCppToolsApi` returning `undefined` must degrade to no-op, so it is NOT
+  an `extensionDependency`. Don't write `c_cpp_properties.json`; the provider
+  replaces it.
 - Flashing goes through the sibling `minuteos.minute-debug` extension's
   programmatic `flash(options)` API. Don't allocate `DebugSession`s,
   register `DebugAdapterTracker`s, or call `vscode.debug.startDebugging`

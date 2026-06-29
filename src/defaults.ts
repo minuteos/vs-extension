@@ -7,4 +7,8 @@ export const defaults: Settings = {
     jobs: null,
   },
   config: 'Release',
+  intellisense: {
+    enabled: true,
+    intelliSenseMode: 'gcc-arm',
+  },
 }

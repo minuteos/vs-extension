@@ -64,6 +64,16 @@
           ],
           "default": "Release",
           "description": "minuteOS build configuration (passed as CONFIG= to make)"
+        },
+        "minute.intellisense.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Provide C/C++ IntelliSense configuration (include paths, defines, compiler) to the C/C++ extension by querying the minuteOS build. Requires the ms-vscode.cpptools extension."
+        },
+        "minute.intellisense.intelliSenseMode": {
+          "type": "string",
+          "default": "gcc-arm",
+          "description": "IntelliSense mode reported to the C/C++ extension (platform/compiler/architecture variant). minuteOS targets are typically 32-bit ARM (gcc-arm)."
         }
       }
     },
@@ -91,6 +101,11 @@
       {
         "command": "minute.selectConfig",
         "title": "minuteOS: Select Configuration",
+        "category": "minuteOS"
+      },
+      {
+        "command": "minute.refreshIntellisense",
+        "title": "minuteOS: Refresh IntelliSense Configuration",
         "category": "minuteOS"
       }
     ],
@@ -142,6 +157,7 @@
     "lint-staged": "^15.4.1",
     "npm-run-all": "^4.1.5",
     "typescript": "^5.7.3",
-    "typescript-eslint": "^8.21.0"
+    "typescript-eslint": "^8.21.0",
+    "vscode-cpptools": "^7.1.1"
   }
 }

@@ -1,4 +1,5 @@
 import { flashFirmware } from '@my/flash'
+import { refreshIntellisense } from '@my/intellisense'
 import { runMake } from '@my/make'
 import { getLog } from '@my/services'
 import * as vscode from 'vscode'
@@ -12,6 +13,7 @@ export function registerCommands(context: vscode.ExtensionContext): void {
     vscode.commands.registerCommand('minute.flash', flash),
     vscode.commands.registerCommand('minute.buildAndFlash', buildAndFlash),
     vscode.commands.registerCommand('minute.selectConfig', selectConfig),
+    vscode.commands.registerCommand('minute.refreshIntellisense', refreshIntellisense),
   )
 }
 

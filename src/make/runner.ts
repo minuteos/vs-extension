@@ -71,3 +71,36 @@ async function invoke({ task, cwd }: RunOptions): Promise<void> {
     })
   })
 }
+
+// Silent make invocation that captures stdout, used to introspect the build
+// (e.g. a dry run to derive compile flags) without touching the build output
+// channel. CONFIG is injected so the result reflects the active configuration.
+export function queryMake(args: string[], cwd: string): Promise<string> {
+  const fullArgs = [`CONFIG=${settings.config}`, ...args]
+  trace('query', settings.make.path, fullArgs, cwd)
+
+  return new Promise<string>((resolve, reject) => {
+    const proc = child_process.spawn(settings.make.path, fullArgs, {
+      cwd,
+      env: process.env,
+    })
+    let stdout = ''
+    let stderr = ''
+    proc.stdout.on('data', (chunk: Buffer) => {
+      stdout += chunk.toString()
+    })
+    proc.stderr.on('data', (chunk: Buffer) => {
+      stderr += chunk.toString()
+    })
+    proc.on('error', (err) => {
+      reject(new BuildError(`Failed to spawn ${settings.make.path}`, null, err))
+    })
+    proc.on('close', (code) => {
+      if (code === 0) {
+        resolve(stdout)
+      } else {
+        reject(new BuildError(`make query exited with code ${String(code)}: ${stderr.trim()}`, code))
+      }
+    })
+  })
+}

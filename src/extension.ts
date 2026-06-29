@@ -1,4 +1,5 @@
 import { registerCommands } from '@my/commands'
+import { configureIntellisense } from '@my/intellisense'
 import { configureLogOutput, configureVsCodeStorage, getLog } from '@my/services'
 import { configureSettings } from '@my/settings'
 import { configureStatusBar } from '@my/status-bar'
@@ -14,6 +15,7 @@ export function activate(context: vscode.ExtensionContext): void {
   configureVsCodeStorage(context)
   configureSettings(context)
   configureStatusBar(context)
+  configureIntellisense(context)
   registerCommands(context)
 
   log.info('minuteOS extension activated')
